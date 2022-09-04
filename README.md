@@ -1,8 +1,27 @@
-# Backend-assessment
-assessment for fullstack/backend role
+# Backend/FullStack Assessment
+Assessment for Krane SWE role
 
+## Technical Details
+Find API Endpoints under `./client/src/commons/constants/index.ts`
+```
+UPLOAD_POST: "/api/post"
+GET_POSTS: "/api/post"
+```
+
+Client-side `UPLOAD_POST` payload: 
+```
+title: title,
+text_body: body,
+```
+
+Expected returns
+`GET_POSTS` should return an array of posts `{Record[]}`
+`UPLOAD_POST` should return the newly created post `{Record}`
+
+Migrations + Prisma has already been setup :)
 ## Available scripts
-
+`npm run start`
+Concurrently run server and client
 
 ## Postgres Setup
 ```
