@@ -92,8 +92,8 @@ function LandingPage() {
             <PostInputComponent uploadPost={uploadPost} setTitle={setTitle} setBody={setBody} />
           ) : (
             <>
-              {posts.map((post: any) => (
-                <PostComponent {...post} />
+              {posts.map((post: any, i: number) => (
+                <PostComponent key={i} {...post} />
               ))}
             </>
           )}
