@@ -1,5 +1,5 @@
 import { useReducer, useState, useEffect } from "react";
-
+import axios from "axios";
 import { useFetch } from "../../hooks/useFetch";
 import { IPost } from "../../interfaces";
 import { DEMO_TEXT, API_ENDPOINT } from "../../commons/";
@@ -8,7 +8,7 @@ import "./styles.css";
 const PostComponent = (props: any) => (
   <div className="bg-slate-100 text-black">
     <h1 className="py-3">{props.title || DEMO_TEXT.TITLE}</h1>
-    <p className="p-5">{props.textBody || DEMO_TEXT.BODY}</p>
+    <p className="p-5">{props.textBody || "No Body"}</p>
     <div className="w-full flex align-left">
       <p className="px-3">
         {props.createdAt ? new Date(props.createdAt).toDateString() : DEMO_TEXT.CREATED_AT}
@@ -32,7 +32,7 @@ const PostInputComponent = (props: any) => (
       placeholder="Your message..."
     ></textarea>
     <button
-      type="button"
+      type="submit"
       className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
     >
       Submit
@@ -46,19 +46,20 @@ function LandingPage() {
   const [body, setBody] = useState<string | undefined>("");
   const [posts, setPosts, error] = useFetch(API_ENDPOINT.GET_POSTS);
 
-  const uploadPost = async () => {
+  const uploadPost = async (e: any) => {
+    e.preventDefault();
     //@ts-ignore
-    const post: IPost = await fetch(`http://localhost:3000/${API_ENDPOINT.UPLOAD_POST}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title: title, text_body: body }),
-    });
-
-    setPosts(() => [post, ...posts]);
-    return post;
+    try {
+      const { data } = await axios.post(API_ENDPOINT.UPLOAD_POST, {
+        title: title,
+        text_body: body,
+      });
+      setPosts(() => [data, ...posts]);
+      setTitle(undefined);
+      setBody(undefined);
+    } catch (err: any) {
+      console.error("ERROR:", err);
+    }
   };
 
   return (
@@ -84,7 +85,7 @@ function LandingPage() {
               onClick={togglePosting}
               className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
             >
-              {isPosting ? "Posts" : "Make a Post"}
+              {isPosting ? "View Posts" : "Make a Post"}
             </button>
           </div>
           {isPosting ? (

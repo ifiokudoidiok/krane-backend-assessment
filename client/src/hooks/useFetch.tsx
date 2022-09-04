@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const useFetch = (url: string, body?: any) => {
   const [response, setResponse] = useState<any>([]);
@@ -13,11 +14,9 @@ export const useFetch = (url: string, body?: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching to", url);
-        const res = await fetch(url);
-        const json = await res.json();
+        const { data } = await axios.get(url);
 
-        setResponse(json);
+        setResponse(data);
       } catch (error: any) {
         error.message !== `Unexpected token '<', "<!DOCTYPE "... is not valid JSON` &&
           setError(error.message || "Unknown error");
