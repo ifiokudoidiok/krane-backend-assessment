@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Krane-Main/backend-assessment/issues"
   },
-  "homepage": "https://github.com/Krane-Main/backend-assessment#readme"
+  "homepage": "https://github.com/Krane-Main/backend-assessment#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
 }
