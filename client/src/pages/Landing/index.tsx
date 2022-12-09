@@ -27,7 +27,7 @@ const PostInputComponent = (props: any) => (
     />
 
     <textarea
-      onChange={(e) => props.setBody(e.target.value)}
+      onChange={(e) => props.setTextBody(e.target.value)}
       className="block p-2.5 w-full text-sm text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="Your message..."
     ></textarea>
@@ -43,7 +43,7 @@ const PostInputComponent = (props: any) => (
 function LandingPage() {
   const [isPosting, togglePosting] = useReducer((s) => !s, true);
   const [title, setTitle] = useState<string | undefined>("");
-  const [body, setBody] = useState<string | undefined>("");
+  const [textBody, setTextBody] = useState<string | undefined>("");
   const [posts, setPosts, error] = useFetch(API_ENDPOINT.GET_POSTS);
 
   const uploadPost = async (e: any) => {
@@ -51,8 +51,8 @@ function LandingPage() {
     //@ts-ignore
     try {
       const { data } = await axios.post(API_ENDPOINT.UPLOAD_POST, {
-        title: title,
-        text_body: body,
+        title,
+        textBody,
       });
       setPosts(() => [data, ...posts]);
       setTitle(undefined);
@@ -89,7 +89,7 @@ function LandingPage() {
             </button>
           </div>
           {isPosting ? (
-            <PostInputComponent uploadPost={uploadPost} setTitle={setTitle} setBody={setBody} />
+            <PostInputComponent uploadPost={uploadPost} setTitle={setTitle} setTextBody={setTextBody} />
           ) : (
             <>
               {posts.map((post: any, i: number) => (
