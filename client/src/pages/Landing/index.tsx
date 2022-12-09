@@ -8,7 +8,7 @@ import "./styles.css";
 const PostComponent = (props: any) => (
   <div className="bg-slate-100 text-black">
     <h1 className="py-3">{props.title || DEMO_TEXT.TITLE}</h1>
-    <p className="p-5">{props.textBody || "No Body"}</p>
+    <p className="p-5">{props.textBody || DEMO_TEXT.BODY}</p>
     <div className="w-full flex align-left">
       <p className="px-3">
         {props.createdAt ? new Date(props.createdAt).toDateString() : DEMO_TEXT.CREATED_AT}
@@ -56,8 +56,9 @@ function LandingPage() {
       });
       setPosts(() => [data, ...posts]);
       setTitle(undefined);
-      setBody(undefined);
-    } catch (err: any) {
+      setTextBody(undefined);
+      e.target.reset();
+    } catch (err: unknown) {
       console.error("ERROR:", err);
     }
   };
