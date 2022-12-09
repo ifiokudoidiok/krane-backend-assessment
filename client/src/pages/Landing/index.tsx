@@ -93,7 +93,7 @@ function LandingPage() {
             <PostInputComponent uploadPost={uploadPost} setTitle={setTitle} setTextBody={setTextBody} />
           ) : (
             <>
-              {posts.map((post: any, i: number) => (
+              {posts.map((post: IPost, i: number) => (
                 <PostComponent key={i} {...post} />
               ))}
             </>
