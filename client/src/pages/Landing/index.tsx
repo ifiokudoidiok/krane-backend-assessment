@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState } from "react";
 import axios from "axios";
 import { useFetch } from "../../hooks/useFetch";
 import { IPost } from "../../interfaces";
