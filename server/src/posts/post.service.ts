@@ -9,8 +9,23 @@ export class PostService {
   async getPosts(): Promise<any | Post> {
     return this.dbService.post.findMany();
   }
+  async getPostById(id: Prisma.PostWhereUniqueInput): Promise<any | Post> {
+    return this.dbService.post.findUnique({ where: id });
+  }
 
   async createPost(data: Prisma.PostCreateInput): Promise<Post> {
     return this.dbService.post.create({ data });
+  }
+
+  async updatePost(params: {
+    where: Prisma.PostWhereUniqueInput;
+    data: Prisma.PostUpdateInput;
+  }): Promise<Post> {
+    const { where, data } = params;
+    return this.dbService.post.update({ data, where });
+  }
+
+  async deletePost(where: Prisma.PostWhereUniqueInput): Promise<Post> {
+    return this.dbService.post.delete({ where });
   }
 }
